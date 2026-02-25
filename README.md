@@ -73,7 +73,6 @@ This project demonstrates an end-to-end data analytics workflow, covering data l
 - Highlighted important business metrics
 - Provided actionable insights for decision-making
 
-*(Customize this section with specific findings from your project.)*
 
 ---
 
