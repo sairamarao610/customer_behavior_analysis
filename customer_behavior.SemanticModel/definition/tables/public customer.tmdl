@@ -1,0 +1,188 @@
+table 'public customer'
+	lineageTag: aab66e14-39bb-49b2-a8e8-9e1f2fff0986
+
+	measure 'Number of Customers' = COUNT('public customer'[customer_id])
+		formatString: 0
+		lineageTag: a2e8cfc1-3951-43a9-b602-7371bf210374
+
+	measure 'Average Purchase Amount' = AVERAGE('public customer'[purchase_count])
+		lineageTag: a532c789-c9ef-4240-99c8-b4a0221819c1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Average Review Rating' = AVERAGE('public customer'[review_rating])
+		lineageTag: 67641da9-5a37-4002-bbf7-35228444d124
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column customer_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 41d2f26c-1b8e-412e-8ebd-3712bce5dfb5
+		summarizeBy: sum
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column age
+		dataType: int64
+		formatString: 0
+		lineageTag: 8a9c477e-18a0-4230-af7b-d38bc50bc0d0
+		summarizeBy: sum
+		sourceColumn: age
+
+		annotation SummarizationSetBy = Automatic
+
+	column gender
+		dataType: string
+		lineageTag: 823b23e3-e43c-44f1-bd9c-9226703fb0e1
+		summarizeBy: none
+		sourceColumn: gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column item_purchase
+		dataType: string
+		lineageTag: b3bb0add-4975-4013-8f8c-b16b0521a169
+		summarizeBy: none
+		sourceColumn: item_purchase
+
+		annotation SummarizationSetBy = Automatic
+
+	column category
+		dataType: string
+		lineageTag: 18efbc9c-6ab8-44ec-a0df-e9d6d4bad7ac
+		summarizeBy: none
+		sourceColumn: category
+
+		annotation SummarizationSetBy = Automatic
+
+	column purchase_count
+		dataType: int64
+		formatString: 0
+		lineageTag: f741562e-de2d-4595-bcef-8ac50c55a2d5
+		summarizeBy: sum
+		sourceColumn: purchase_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column location
+		dataType: string
+		lineageTag: 5e51a4af-2d47-4f6b-b8f5-d255743f3298
+		summarizeBy: none
+		sourceColumn: location
+
+		annotation SummarizationSetBy = Automatic
+
+	column size
+		dataType: string
+		lineageTag: 6509adfd-35df-4379-a247-511f6974479d
+		summarizeBy: none
+		sourceColumn: size
+
+		annotation SummarizationSetBy = Automatic
+
+	column colour
+		dataType: string
+		lineageTag: 01f5876a-d779-47b3-8816-d0d88ca4863e
+		summarizeBy: none
+		sourceColumn: colour
+
+		annotation SummarizationSetBy = Automatic
+
+	column season
+		dataType: string
+		lineageTag: 56358fce-0303-462d-9989-99bd6451e1e2
+		summarizeBy: none
+		sourceColumn: season
+
+		annotation SummarizationSetBy = Automatic
+
+	column review_rating
+		dataType: double
+		lineageTag: bc81afeb-2cba-42c4-959c-3a5dc81c26fb
+		summarizeBy: sum
+		sourceColumn: review_rating
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column subscription
+		dataType: string
+		lineageTag: 81414c58-bf42-4dc8-9fbe-b2f1253ed61c
+		summarizeBy: none
+		sourceColumn: subscription
+
+		annotation SummarizationSetBy = Automatic
+
+	column shipping_type
+		dataType: string
+		lineageTag: e2624550-957e-46fb-8847-1a88cbf80e66
+		summarizeBy: none
+		sourceColumn: shipping_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column discount
+		dataType: string
+		lineageTag: 34c381d6-dde5-43f7-b79f-cc40131f2e79
+		summarizeBy: none
+		sourceColumn: discount
+
+		annotation SummarizationSetBy = Automatic
+
+	column previous_page
+		dataType: int64
+		formatString: 0
+		lineageTag: 0db44434-4268-4e86-8927-fcc0f8a121c9
+		summarizeBy: sum
+		sourceColumn: previous_page
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_method
+		dataType: string
+		lineageTag: ba64432c-93a0-44bc-8523-204b3c31e3e1
+		summarizeBy: none
+		sourceColumn: payment_method
+
+		annotation SummarizationSetBy = Automatic
+
+	column frequency_of_purchase
+		dataType: string
+		lineageTag: da83d863-e957-4eb1-a15d-012717c69837
+		summarizeBy: none
+		sourceColumn: frequency_of_purchase
+
+		annotation SummarizationSetBy = Automatic
+
+	column age_group
+		dataType: string
+		lineageTag: 9abf100c-0584-4c0c-a3ca-8d9458bd2e68
+		summarizeBy: none
+		sourceColumn: age_group
+
+		annotation SummarizationSetBy = Automatic
+
+	column purchase_frequency_days
+		dataType: double
+		lineageTag: 23fea731-943e-46d5-8a6e-2f4585a3708d
+		summarizeBy: sum
+		sourceColumn: purchase_frequency_days
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'public customer' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost:5432", "customer_behavior"),
+				    public_customer = Source{[Schema="public",Item="customer"]}[Data]
+				in
+				    public_customer
+
+	annotation PBI_ResultType = Table
+
